@@ -38,7 +38,7 @@ func (s *Server) Do() {
 				log.Println("error", err)
 				continue
 			}
-			log.Println("cnt:", cnt)
+			log.Println("cnt in server:", cnt)
 			conn.Close()
 		}
 	}

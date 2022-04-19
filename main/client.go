@@ -26,7 +26,7 @@ func (c *Client) Do() {
 	if err != nil {
 		panic(err)
 	}
-	log.Println("cnt:", cnt)
+	log.Println("cnt in client:", cnt)
 	res, err := ioutil.ReadAll(conn)
 	if err != nil {
 		panic(err)
