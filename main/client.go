@@ -7,14 +7,14 @@ import (
 )
 
 type Client struct {
-	ServerAddr string
+	URL string
 }
 
 func (c *Client) Do() {
-	if c.ServerAddr == "" {
+	if c.URL == "" {
 		panic("missing domain")
 	}
-	tcpAddr, err := net.ResolveTCPAddr("tcp", c.ServerAddr)
+	tcpAddr, err := net.ResolveTCPAddr("tcp", c.URL)
 	if err != nil {
 		panic(err)
 	}
