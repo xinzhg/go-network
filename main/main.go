@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -22,6 +23,8 @@ func main() {
 			client.Do()
 		}()
 	}
+	log.Println("before server Done")
 	server.Done <- struct{}{}
+	log.Println("after server Done")
 	time.Sleep(5 * time.Second)
 }
