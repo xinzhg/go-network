@@ -32,4 +32,5 @@ func (c *Client) Do() {
 		panic(err)
 	}
 	log.Println(string(res))
+	conn.Close()
 }
