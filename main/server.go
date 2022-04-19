@@ -46,8 +46,8 @@ func (s *Server) Do() {
 			go func() {
 				defer conn.Close()
 				daytime := time.Now().String()
-				recv := make([]byte, 512)
-				cnt, err := conn.Read(recv)
+				recv := [512]byte{}
+				cnt, err := conn.Read(recv[:])
 				if err != nil {
 					log.Println("error", err)
 					conn.Close()
