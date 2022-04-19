@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	server := &Server{}
+	server := &Server{Done: make(chan struct{}, 1)}
 	go func() {
 		server.Do()
 	}()
