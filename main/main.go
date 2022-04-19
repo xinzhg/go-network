@@ -25,6 +25,7 @@ func main() {
 	}
 	log.Println("before server Done")
 	server.Done <- struct{}{}
+	server.Shutdown()
 	log.Println("after server Done")
 	time.Sleep(5 * time.Second)
 }
