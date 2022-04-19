@@ -12,7 +12,7 @@ func main() {
 	}()
 	client := &Client{URL: ":1200"}
 	for i := 0; i < 1; i++ {
-		go func() {
+		func() {
 			defer func() {
 				if r := recover(); r != nil {
 					fmt.Println("Recovered in f", r)
