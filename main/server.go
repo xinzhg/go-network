@@ -7,6 +7,7 @@ import (
 )
 
 type Server struct {
+	Done chan struct{}
 }
 
 func (s *Server) Do() {
@@ -21,18 +22,24 @@ func (s *Server) Do() {
 		panic(err)
 	}
 	for {
-		conn, err := listener.Accept()
-		if err != nil {
-			log.Println("error:", err)
-			continue
+		select {
+		case <-s.Done:
+			log.Println("terminating server")
+			return
+		default:
+			conn, err := listener.Accept()
+			if err != nil {
+				log.Println("error:", err)
+				continue
+			}
+			daytime := time.Now().String()
+			cnt, err := conn.Write([]byte(daytime))
+			if err != nil {
+				log.Println("error", err)
+				continue
+			}
+			log.Println("cnt:", cnt)
+			conn.Close()
 		}
-		daytime := time.Now().String()
-		cnt, err := conn.Write([]byte(daytime))
-		if err != nil {
-			log.Println("error", err)
-			continue
-		}
-		log.Println("cnt:", cnt)
-		conn.Close()
 	}
 }
