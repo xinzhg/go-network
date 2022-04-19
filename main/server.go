@@ -7,7 +7,15 @@ import (
 )
 
 type Server struct {
-	Done chan struct{}
+	listener net.Listener
+	Done     chan struct{}
+}
+
+func (s *Server) Shutdown() {
+	err := s.listener.Close()
+	if err != nil {
+		panic("error in shutdown, " + err.Error())
+	}
 }
 
 func (s *Server) Do() {
@@ -21,6 +29,7 @@ func (s *Server) Do() {
 	if err != nil {
 		panic(err)
 	}
+	s.listener = listener
 	for {
 		select {
 		case <-s.Done:
