@@ -33,9 +33,18 @@ func (s *Server) Do() {
 				continue
 			}
 			daytime := time.Now().String()
-			cnt, err := conn.Write([]byte(daytime))
+			recv := make([]byte, 512)
+			cnt, err := conn.Read(recv)
 			if err != nil {
 				log.Println("error", err)
+				conn.Close()
+				continue
+			}
+			log.Println("cnt in read server", cnt)
+			cnt, err = conn.Write([]byte(daytime))
+			if err != nil {
+				log.Println("error", err)
+				conn.Close()
 				continue
 			}
 			log.Println("cnt in server:", cnt)
