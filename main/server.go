@@ -27,7 +27,9 @@ func (s *Server) Do() {
 			log.Println("terminating server")
 			return
 		default:
+			log.Println("before accept")
 			conn, err := listener.Accept()
+			log.Println("after accept")
 			if err != nil {
 				log.Println("error:", err)
 				continue
