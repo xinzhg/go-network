@@ -11,7 +11,7 @@ func main() {
 		server.Do()
 	}()
 	client := &Client{URL: ":1200"}
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 1; i++ {
 		go func() {
 			defer func() {
 				if r := recover(); r != nil {
