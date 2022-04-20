@@ -31,10 +31,12 @@ func (c *Client) Do() {
 		panic(err)
 	}
 	log.Println("cnt in client:", cnt)
+	log.Println("before readAll in client")
 	res, err := ioutil.ReadAll(connBackUp)
 	if err != nil {
 		panic(err)
 	}
+	log.Println("after readAll in client")
 	log.Println(string(res))
 	//connBackUp.SetDeadline(time.Now().Add(-1 * time.Second))
 	log.Println("before close in client")
