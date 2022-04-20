@@ -4,11 +4,14 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"time"
 )
 
 type Client struct {
 	URL string
 }
+
+var connBackUp *net.TCPConn
 
 func (c *Client) Do() {
 	if c.URL == "" {
@@ -18,19 +21,22 @@ func (c *Client) Do() {
 	if err != nil {
 		panic(err)
 	}
-	conn, err := net.DialTCP("tcp", nil, tcpAddr)
+	if connBackUp == nil {
+		connBackUp, err = net.DialTCP("tcp", nil, tcpAddr)
+	}
 	if err != nil {
 		panic(err)
 	}
-	cnt, err := conn.Write([]byte("HEAD / HTTP/1.0\r\n\r\n"))
+	cnt, err := connBackUp.Write([]byte("HEAD / HTTP/1.0\r\n\r\n"))
 	if err != nil {
 		panic(err)
 	}
 	log.Println("cnt in client:", cnt)
-	res, err := ioutil.ReadAll(conn)
+	res, err := ioutil.ReadAll(connBackUp)
 	if err != nil {
 		panic(err)
 	}
 	log.Println(string(res))
-	conn.Close()
+	connBackUp.SetDeadline(time.Now().Add(-1 * time.Second))
+	//conn.Close()
 }
