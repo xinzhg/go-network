@@ -6,8 +6,6 @@ import (
 	"time"
 )
 
-import _ "net/http/pprof"
-
 type Server struct {
 	listener net.Listener
 	Done     chan struct{}

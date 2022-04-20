@@ -3,10 +3,16 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"time"
 )
 
+import _ "net/http/pprof"
+
 func main() {
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
 	server := &Server{Done: make(chan struct{}, 1)}
 	go func() {
 		server.Do()
