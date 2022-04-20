@@ -4,7 +4,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
-	"time"
 )
 
 type Client struct {
@@ -37,6 +36,6 @@ func (c *Client) Do() {
 		panic(err)
 	}
 	log.Println(string(res))
-	connBackUp.SetDeadline(time.Now().Add(-1 * time.Second))
-	connBackUp.Close()
+	//connBackUp.SetDeadline(time.Now().Add(-1 * time.Second))
+	//connBackUp.Close()
 }
