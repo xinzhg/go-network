@@ -25,7 +25,7 @@ func (s *Server) Do() {
 		panic(err)
 	}
 	log.Println(tcpAddr.String())
-	listener, err := net.Listen("tcp", tcpAddr.String())
+	listener, err := net.ListenTCP("tcp", tcpAddr)
 	if err != nil {
 		panic(err)
 	}
@@ -37,7 +37,7 @@ func (s *Server) Do() {
 			return
 		default:
 			log.Println("before accept")
-			conn, err := listener.Accept()
+			conn, err := listener.AcceptTCP()
 			log.Println("after accept")
 			if err != nil {
 				log.Println("error:", err)
@@ -45,7 +45,7 @@ func (s *Server) Do() {
 			}
 			go func() {
 				//conn.SetDeadline(time.Now().Add(3 * time.Second))
-				defer conn.Close()
+				//defer conn.Close()
 				daytime := time.Now().String()
 				recv := [512]byte{}
 				cnt, err := conn.Read(recv[:])
@@ -55,6 +55,7 @@ func (s *Server) Do() {
 					return
 				}
 				log.Println("cnt in read server", cnt)
+				conn.SetNoDelay(true)
 				cnt, err = conn.Write([]byte(daytime))
 				if err != nil {
 					log.Println("error", err)
