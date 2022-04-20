@@ -37,5 +37,5 @@ func (c *Client) Do() {
 	}
 	log.Println(string(res))
 	//connBackUp.SetDeadline(time.Now().Add(-1 * time.Second))
-	//connBackUp.Close()
+	connBackUp.Close()
 }
