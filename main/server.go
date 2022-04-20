@@ -31,6 +31,7 @@ func (s *Server) Do() {
 	}
 	s.listener = listener
 	for {
+		log.Println("looping")
 		select {
 		case <-s.Done:
 			log.Println("terminating server")
