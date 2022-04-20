@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"sync"
 	"time"
 )
 
@@ -13,12 +12,12 @@ func main() {
 		server.Do()
 	}()
 	client := &Client{URL: ":1200"}
-	wg := sync.WaitGroup{}
+	//wg := sync.WaitGroup{}
 	for i := 0; i < 10; i++ {
-		wg.Add(1)
-		go func() {
+		//wg.Add(1)
+		func() {
 			defer func() {
-				wg.Done()
+				//wg.Done()
 				if r := recover(); r != nil {
 					fmt.Println("Recovered in f", r)
 				}
@@ -27,7 +26,7 @@ func main() {
 			client.Do()
 		}()
 	}
-	wg.Wait()
+	//wg.Wait()
 	log.Println("before server Done")
 	server.Done <- struct{}{}
 	server.Shutdown()
