@@ -44,21 +44,21 @@ func (s *Server) Do() {
 				continue
 			}
 			go func() {
-				conn.SetDeadline(time.Now().Add(3 * time.Second))
+				//conn.SetDeadline(time.Now().Add(3 * time.Second))
 				defer conn.Close()
 				daytime := time.Now().String()
 				recv := [512]byte{}
 				cnt, err := conn.Read(recv[:])
 				if err != nil {
 					log.Println("error", err)
-					conn.Close()
+					//conn.Close()
 					return
 				}
 				log.Println("cnt in read server", cnt)
 				cnt, err = conn.Write([]byte(daytime))
 				if err != nil {
 					log.Println("error", err)
-					conn.Close()
+					//conn.Close()
 					return
 				}
 				log.Println("cnt in server:", cnt)
