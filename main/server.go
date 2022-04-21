@@ -11,6 +11,8 @@ import (
 
 const EOF = "\000"
 
+const SERVER = "service side:"
+
 type Server struct {
 	listener net.Listener
 	Done     chan struct{}
@@ -36,17 +38,17 @@ func (s *Server) Do() {
 	}
 	s.listener = listener
 	for {
-		log.Println("looping")
+		log.Println(SERVER + "looping")
 		select {
 		case <-s.Done:
-			log.Println("terminating server")
+			log.Println(SERVER + "terminating server")
 			return
 		default:
-			log.Println("before accept")
+			log.Println(SERVER + "before accept")
 			conn, err := listener.AcceptTCP()
-			log.Println("after accept")
+			log.Println(SERVER + "after accept")
 			if err != nil {
-				log.Println("error:", err)
+				log.Println(SERVER+"error:", err)
 				continue
 			}
 			go func() {
@@ -56,21 +58,21 @@ func (s *Server) Do() {
 				recv := [512]byte{}
 				cnt, err := conn.Read(recv[:])
 				if err != nil {
-					log.Println("error", err)
+					log.Println(SERVER+"error", err)
 					//conn.Close()
 					return
 				}
-				fmt.Println("server:", string(recv[:]), len(recv[:]), len(recv))
-				log.Println("cnt in read server", cnt)
+				fmt.Println(SERVER+"server:", string(recv[:]), len(recv[:]), len(recv))
+				log.Println(SERVER+"cnt in read server", cnt)
 				//conn.SetNoDelay(true)
 				io.Copy(ioutil.Discard, conn)
 				cnt, err = conn.Write([]byte(daytime))
 				if err != nil {
-					log.Println("error", err)
+					log.Println(SERVER+"error", err)
 					//conn.Close()
 					return
 				}
-				log.Println("cnt in server:", cnt)
+				log.Println(SERVER+"cnt in server:", cnt)
 			}()
 		}
 	}

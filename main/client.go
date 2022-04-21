@@ -9,6 +9,8 @@ type Client struct {
 	URL string
 }
 
+const CLIENT = "client side: "
+
 var connBackUp *net.TCPConn
 
 func (c *Client) Do() {
@@ -29,17 +31,17 @@ func (c *Client) Do() {
 	if err != nil {
 		panic(err)
 	}
-	log.Println("cnt in client:", cnt)
-	log.Println("before readAll in client")
+	log.Println(CLIENT+"cnt in client:", cnt)
+	log.Println(CLIENT + "before readAll in client")
 	//connBackUp.SetNoDelay(true)
 	//res, err := ioutil.ReadAll(connBackUp)
 	//if err != nil {
 	//	panic(err)
 	//}
-	log.Println("after readAll in client")
+	log.Println(CLIENT + "after readAll in client")
 	//log.Println(string(res))
 	//connBackUp.SetDeadline(time.Now().Add(-1 * time.Second))
-	log.Println("before close in client")
+	log.Println(CLIENT + "before close in client")
 	//connBackUp.Close()
-	log.Println("after close in client")
+	log.Println(CLIENT + "after close in client")
 }
