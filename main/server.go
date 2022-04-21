@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"io/ioutil"
 	"log"
 	"net"
 	"time"
@@ -67,6 +69,7 @@ func (s *Server) Do() {
 					//conn.Close()
 					return
 				}
+				io.Copy(ioutil.Discard, conn)
 				log.Println("cnt in server:", cnt)
 			}()
 		}
