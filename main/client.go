@@ -26,13 +26,13 @@ func (c *Client) Do() {
 	if err != nil {
 		panic(err)
 	}
-	connBackUp.SetNoDelay(true)
 	cnt, err := connBackUp.Write([]byte("HEAD / HTTP/1.0\r\n\r\n"))
 	if err != nil {
 		panic(err)
 	}
 	log.Println("cnt in client:", cnt)
 	log.Println("before readAll in client")
+	connBackUp.SetNoDelay(true)
 	res, err := ioutil.ReadAll(connBackUp)
 	if err != nil {
 		panic(err)
