@@ -35,6 +35,13 @@ func (s *Server) Do() {
 		panic(err)
 	}
 	s.listener = listener
+	log.Println(SERVER + "before accept")
+	conn, err := listener.AcceptTCP()
+	log.Println(SERVER + "after accept")
+	if err != nil {
+		log.Println(SERVER+"error:", err)
+		return
+	}
 	for {
 		log.Println(SERVER + "looping")
 		select {
@@ -42,13 +49,6 @@ func (s *Server) Do() {
 			log.Println(SERVER + "terminating server")
 			return
 		default:
-			log.Println(SERVER + "before accept")
-			conn, err := listener.AcceptTCP()
-			log.Println(SERVER + "after accept")
-			if err != nil {
-				log.Println(SERVER+"error:", err)
-				continue
-			}
 			go func() {
 				//conn.SetDeadline(time.Now().Add(3 * time.Second))
 				//defer conn.Close()
