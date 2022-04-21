@@ -60,7 +60,7 @@ func (s *Server) Do() {
 					//conn.Close()
 					return
 				}
-				fmt.Println(SERVER+"server:", string(recv[:]), len(recv[:]), len(recv))
+				fmt.Println(SERVER, "what server recev:", string(recv[:]), len(recv[:]), len(recv))
 				log.Println(SERVER+"cnt in read server", cnt)
 				//conn.SetNoDelay(true)
 				log.Println(SERVER, "before io.copy")
