@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net"
 	"time"
@@ -57,6 +58,7 @@ func (s *Server) Do() {
 					//conn.Close()
 					return
 				}
+				fmt.Println("server:", string(recv[:]), len(recv[:]), len(recv))
 				log.Println("cnt in read server", cnt)
 				//conn.SetNoDelay(true)
 				cnt, err = conn.Write([]byte(daytime))
