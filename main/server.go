@@ -78,7 +78,7 @@ func (s *Server) Do() {
 					//conn.Close()
 					return
 				}
-				conn.Close()
+				//conn.Close()
 				log.Println(SERVER+"cnt in server:", cnt)
 			}()
 		}
