@@ -41,6 +41,6 @@ func (c *Client) Do() {
 	log.Println(string(res))
 	//connBackUp.SetDeadline(time.Now().Add(-1 * time.Second))
 	log.Println("before close in client")
-	//connBackUp.Close()
+	connBackUp.Close()
 	log.Println("after close in client")
 }

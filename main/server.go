@@ -48,7 +48,7 @@ func (s *Server) Do() {
 			}
 			go func() {
 				//conn.SetDeadline(time.Now().Add(3 * time.Second))
-				//defer conn.Close()
+				defer conn.Close()
 				daytime := time.Now().String() + EOF
 				recv := [512]byte{}
 				cnt, err := conn.Read(recv[:])
