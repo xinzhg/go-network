@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"io/ioutil"
 	"log"
 	"net"
 	"time"
@@ -66,7 +64,7 @@ func (s *Server) Do() {
 				log.Println(SERVER+"cnt in read server", cnt)
 				//conn.SetNoDelay(true)
 				log.Println(SERVER, "before io.copy")
-				io.Copy(ioutil.Discard, conn)
+				//io.Copy(ioutil.Discard, conn)
 				log.Println(SERVER, "after io.copy")
 				log.Println(SERVER, "before write")
 				log.Println(SERVER, "before write")
