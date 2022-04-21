@@ -66,12 +66,14 @@ func (s *Server) Do() {
 				log.Println(SERVER+"cnt in read server", cnt)
 				//conn.SetNoDelay(true)
 				io.Copy(ioutil.Discard, conn)
+				log.Println(SERVER, "before write")
 				cnt, err = conn.Write([]byte(daytime))
 				if err != nil {
 					log.Println(SERVER+"error", err)
 					//conn.Close()
 					return
 				}
+				log.Println(SERVER, "after write")
 				log.Println(SERVER+"cnt in server:", cnt)
 			}()
 		}
