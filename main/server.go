@@ -68,14 +68,17 @@ func (s *Server) Do() {
 				log.Println(SERVER, "after io.copy")
 				log.Println(SERVER, "before write")
 				log.Println(SERVER, "before write")
-				cnt, err = conn.Write([]byte(daytime))
+				fd, err := conn.File()
+				cnt, err = fd.Write([]byte(daytime))
+				fd.Sync()
+				//cnt, err = conn.Write([]byte(daytime))
 				log.Println(SERVER, "after write")
 				if err != nil {
 					log.Println(SERVER+"error", err)
 					//conn.Close()
 					return
 				}
-				conn.Close()
+				//conn.Close()
 				log.Println(SERVER+"cnt in server:", cnt)
 			}()
 		}
