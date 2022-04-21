@@ -58,7 +58,7 @@ func (s *Server) Do() {
 					return
 				}
 				log.Println("cnt in read server", cnt)
-				conn.SetNoDelay(true)
+				//conn.SetNoDelay(true)
 				cnt, err = conn.Write([]byte(daytime))
 				if err != nil {
 					log.Println("error", err)

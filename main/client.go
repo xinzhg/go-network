@@ -32,7 +32,7 @@ func (c *Client) Do() {
 	}
 	log.Println("cnt in client:", cnt)
 	log.Println("before readAll in client")
-	connBackUp.SetNoDelay(true)
+	//connBackUp.SetNoDelay(true)
 	res, err := ioutil.ReadAll(connBackUp)
 	if err != nil {
 		panic(err)
