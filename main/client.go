@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io/ioutil"
 	"log"
 	"net"
 )
@@ -33,12 +32,12 @@ func (c *Client) Do() {
 	log.Println("cnt in client:", cnt)
 	log.Println("before readAll in client")
 	//connBackUp.SetNoDelay(true)
-	res, err := ioutil.ReadAll(connBackUp)
-	if err != nil {
-		panic(err)
-	}
+	//res, err := ioutil.ReadAll(connBackUp)
+	//if err != nil {
+	//	panic(err)
+	//}
 	log.Println("after readAll in client")
-	log.Println(string(res))
+	//log.Println(string(res))
 	//connBackUp.SetDeadline(time.Now().Add(-1 * time.Second))
 	log.Println("before close in client")
 	//connBackUp.Close()
