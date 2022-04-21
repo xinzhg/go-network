@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net"
 	"time"
@@ -50,7 +49,7 @@ func (s *Server) Do() {
 			go func() {
 				//conn.SetDeadline(time.Now().Add(3 * time.Second))
 				defer conn.Close()
-				daytime := time.Now().String() + EOF
+				daytime := time.Now().String()
 				recv := [512]byte{}
 				cnt, err := conn.Read(recv[:])
 				if err != nil {
@@ -58,7 +57,7 @@ func (s *Server) Do() {
 					//conn.Close()
 					return
 				}
-				fmt.Println("server:", string(recv[:]), len(recv[:]), len(recv))
+				//fmt.Println("server:", string(recv[:]), len(recv[:]), len(recv))
 				log.Println("cnt in read server", cnt)
 				//conn.SetNoDelay(true)
 				cnt, err = conn.Write([]byte(daytime))
