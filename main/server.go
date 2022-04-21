@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"time"
 )
 
 const EOF = "\000"
@@ -51,7 +52,7 @@ func (s *Server) Do() {
 			go func() {
 				//conn.SetDeadline(time.Now().Add(3 * time.Second))
 				//defer conn.Close()
-				//daytime := time.Now().String() + EOF
+				daytime := time.Now().String() + EOF
 				recv := [512]byte{}
 				cnt, err := conn.Read(recv[:])
 				if err != nil {
@@ -63,7 +64,7 @@ func (s *Server) Do() {
 				log.Println("cnt in read server", cnt)
 				//conn.SetNoDelay(true)
 				io.Copy(ioutil.Discard, conn)
-				//cnt, err = conn.Write([]byte(daytime))
+				cnt, err = conn.Write([]byte(daytime))
 				if err != nil {
 					log.Println("error", err)
 					//conn.Close()
