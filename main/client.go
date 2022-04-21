@@ -28,6 +28,7 @@ func (c *Client) Do() {
 		panic(err)
 	}
 	cnt, err := connBackUp.Write([]byte("HEAD / HTTP/1.0\r\n\r\n"))
+	log.Println(CLIENT, "sent msg")
 	if err != nil {
 		panic(err)
 	}
