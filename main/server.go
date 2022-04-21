@@ -50,14 +50,14 @@ func (s *Server) Do() {
 			//go func() {
 			daytime := time.Now().String() + EOF
 			recv := [512]byte{}
-			cnt, err := conn.Read(recv[:])
+			_, err := conn.Read(recv[:])
 			if err != nil {
 				log.Println(SERVER, "error", err)
 				//conn.Close()
 				return
 			}
 			fmt.Println(SERVER, "what server recevs:", string(recv[:]), len(recv[:]), len(recv))
-			cnt, err = conn.Write([]byte(daytime))
+			_, err = conn.Write([]byte(daytime))
 			log.Println(SERVER, "sent")
 			if err != nil {
 				log.Println(SERVER, "error", err)
