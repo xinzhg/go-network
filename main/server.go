@@ -70,7 +70,7 @@ func (s *Server) Do() {
 				log.Println(SERVER, "before write")
 				fd, err := conn.File()
 				cnt, err = fd.Write([]byte(daytime))
-				fd.Sync()
+				err = fd.Sync()
 				//cnt, err = conn.Write([]byte(daytime))
 				log.Println(SERVER, "after write")
 				if err != nil {
