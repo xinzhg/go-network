@@ -36,6 +36,8 @@ func (s *Server) Do() {
 	}
 	s.listener = listener
 	conn, err := listener.AcceptTCP()
+	f, _ := conn.File()
+	fmt.Println("conn's fd:", f.Fd())
 	if err != nil {
 		log.Println(SERVER+"error:", err)
 		return
