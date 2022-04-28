@@ -78,7 +78,7 @@ func (s *Server) Do() {
 				if err != nil {
 					panic("error in epoll reading" + err.Error())
 				}
-				log.Println(SERVER, n, string(bs[:]), event.Events, event.Fd, event.Pad)
+				log.Println(SERVER, "details:", n, string(bs[:]), event.Events, event.Fd, event.Pad)
 			}
 			//go func() {
 			daytime := time.Now().String() + EOF
