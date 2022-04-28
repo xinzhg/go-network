@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"syscall"
 	"time"
+
+	u "golang.org/x/sys/unix"
 )
 
 const EOF = "\000"
@@ -37,11 +40,25 @@ func (s *Server) Do() {
 	s.listener = listener
 	conn, err := listener.AcceptTCP()
 	f, _ := conn.File()
+
+	epfd, err := u.EpollCreate1(0)
+	if err != nil {
+		panic("error in creating epoll instance" + err.Error())
+	}
+	var event u.EpollEvent
+	event.Events = syscall.EPOLLIN | syscall.EPOLLOUT
+	event.Fd = int32(f.Fd())
+	err = u.EpollCtl(epfd, u.EPOLL_CTL_ADD, int(event.Fd), &event)
+	if err != nil {
+		panic("error in epoll ctl" + err.Error())
+	}
+
 	fmt.Println(SERVER, "conn's fd:", f.Fd())
 	if err != nil {
 		log.Println(SERVER, "error:", err)
 		return
 	}
+	var events [512]u.EpollEvent
 	for {
 		log.Println(SERVER, "looping")
 		select {
@@ -49,18 +66,27 @@ func (s *Server) Do() {
 			log.Println(SERVER, "terminating server")
 			return
 		default:
+			nevents, err := u.EpollWait(epfd, events[:], -1)
+			if err != nil {
+				panic("error in waiting" + err.Error())
+			}
+			log.Println(SERVER, "number of events from epoll", nevents)
+			for i := 0; i < nevents; i++ {
+				event := events[i]
+				bs := [512]byte{}
+				n, err := u.Read(int(event.Fd), bs[:])
+				if err != nil {
+					panic("error in epoll reading" + err.Error())
+				}
+				log.Println(SERVER, n, string(bs[:]))
+			}
 			//go func() {
 			daytime := time.Now().String() + EOF
-			recv := [512]byte{}
-			_, err := conn.Read(recv[:])
+			n, err := u.Write(int(event.Fd), []byte(daytime))
 			if err != nil {
-				log.Println(SERVER, "error", err)
-				//conn.Close()
-				return
+				panic("error in epoll sending" + err.Error())
 			}
-			fmt.Println(SERVER, "what server recevs:", string(recv[:]), len(recv[:]), len(recv))
-			_, err = conn.Write([]byte(daytime))
-			log.Println(SERVER, "sent")
+			log.Println(SERVER, "sent", n)
 			if err != nil {
 				log.Println(SERVER, "error", err)
 				//conn.Close()
