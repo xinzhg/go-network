@@ -79,7 +79,6 @@ func (s *Server) Do() {
 		}
 	}()
 
-	var events [512]u.EpollEvent
 	for {
 		log.Println(SERVER, "looping")
 		select {
@@ -87,6 +86,7 @@ func (s *Server) Do() {
 			log.Println(SERVER, "terminating server")
 			return
 		default:
+			var events [512]u.EpollEvent
 			nevents, err := u.EpollWait(epfd, events[:], -1)
 			if err != nil {
 				panic("error in waiting" + err.Error())
