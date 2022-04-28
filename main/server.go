@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strings"
 	"syscall"
 	"time"
 
@@ -47,6 +48,17 @@ func (s *Server) Do() {
 		for {
 			conn, err := listener.AcceptTCP()
 			if err != nil {
+				//if errors.Is(err, u)
+				if strings.Contains(err.Error(), "use of closed network connection") {
+					defer func() {
+						err := u.Close(epfd)
+						if err != nil {
+							panic("error in closing epfd:" + err.Error())
+						}
+
+					}()
+					return
+				}
 				panic("error in accepting tcp" + err.Error())
 			}
 			f, _ := conn.File()
