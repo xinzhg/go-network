@@ -116,6 +116,7 @@ func (s *Server) Do() {
 				//conn.Close()
 				return
 			}
+			u.Close(efd)
 			//conn.Close()
 			//}()
 		}
