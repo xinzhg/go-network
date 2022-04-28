@@ -32,6 +32,21 @@ func main() {
 			client.Do()
 		}()
 	}
+	client = &Client{URL: ":1200"}
+	//wg := sync.WaitGroup{}
+	for i := 0; i < 10; i++ {
+		//wg.Add(1)
+		func() {
+			defer func() {
+				//wg.Done()
+				if r := recover(); r != nil {
+					fmt.Println("Recovered in f", r)
+				}
+			}()
+			time.Sleep(1 * time.Second)
+			client.Do()
+		}()
+	}
 	//wg.Wait()
 	log.Println("before server Done")
 	server.Done <- struct{}{}
