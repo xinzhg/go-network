@@ -33,7 +33,7 @@ func main() {
 			client.Do()
 		}()
 	}
-	client = &Client{URL: ":1200"}
+	//client = &Client{URL: ":1200"}
 	//wg := sync.WaitGroup{}
 	for i := 0; i < 10; i++ {
 		wg.Add(1)
