@@ -51,6 +51,7 @@ func (s *Server) Do() {
 				//if errors.Is(err, u)
 				if strings.Contains(err.Error(), "use of closed network connection") {
 					defer func() {
+						log.Println("finishing sever")
 						err := u.Close(epfd)
 						if err != nil {
 							panic("error in closing epfd:" + err.Error())
