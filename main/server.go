@@ -46,6 +46,9 @@ func (s *Server) Do() {
 	go func() {
 		for {
 			conn, err := listener.AcceptTCP()
+			if err != nil {
+				panic("error in accepting tcp" + err.Error())
+			}
 			f, _ := conn.File()
 			var event u.EpollEvent
 			event.Events = syscall.EPOLLIN | syscall.EPOLLOUT
