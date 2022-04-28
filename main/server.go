@@ -96,6 +96,7 @@ func (s *Server) Do() {
 			for i := 0; i < nevents; i++ {
 				event := events[i]
 				bs := [512]byte{}
+				log.Println(SERVER, "reading", event.Fd)
 				n, err := u.Read(int(event.Fd), bs[:])
 				efd = int(event.Fd)
 				if err != nil {
