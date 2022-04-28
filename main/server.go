@@ -116,6 +116,10 @@ func (s *Server) Do() {
 				//conn.Close()
 				return
 			}
+			var event u.EpollEvent
+			event.Events = syscall.EPOLLIN | syscall.EPOLLOUT
+			event.Fd = int32(efd)
+			u.EpollCtl(epfdm, u.EPOLL_CTL_DEL, efd, &event)
 			u.Close(efd)
 			//conn.Close()
 			//}()
