@@ -13,7 +13,7 @@ func main() {
 	go func() {
 		log.Println(http.ListenAndServe("localhost:6060", nil))
 	}()
-	server := &Server{Done: make(chan struct{}, 0)}
+	server := &Server{Done: make(chan struct{}, 1)}
 	go func() {
 		server.Do()
 	}()
