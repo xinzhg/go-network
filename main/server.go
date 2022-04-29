@@ -78,6 +78,7 @@ func (s *Server) Do() {
 				log.Println(SERVER, "error:", err)
 				return
 			}
+			log.Println(SERVER, "next for loop")
 		}
 	}()
 
