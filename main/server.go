@@ -66,7 +66,7 @@ func (s *Server) Do() {
 			}
 			f, _ := conn.File()
 			var event u.EpollEvent
-			event.Events = syscall.EPOLLIN | syscall.EPOLLOUT
+			event.Events = syscall.EPOLLIN
 			event.Fd = int32(f.Fd())
 			err = u.EpollCtl(epfd, u.EPOLL_CTL_ADD, int(event.Fd), &event)
 			if err != nil {
@@ -90,7 +90,7 @@ func (s *Server) Do() {
 			return
 		default:
 			var events [512]u.EpollEvent
-			nevents, err := u.EpollWait(epfd, events[:], -1)
+			nevents, err := u.EpollWait(epfd, events[:], 1)
 			if err != nil {
 				panic("error in waiting" + err.Error())
 			}
