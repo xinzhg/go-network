@@ -45,6 +45,7 @@ func (c *Client) Do() {
 	if err != nil {
 		panic(err)
 	}
+	log.Println(CLIENT, string(res[:]))
 	cnt, err = connBackUp.Write([]byte("HEAD / HTTP/1.0\r\n\r\n"))
 	log.Println(CLIENT, "sent msg")
 	if err != nil {
@@ -61,7 +62,6 @@ func (c *Client) Do() {
 	}
 
 	log.Println(CLIENT, "after readAll in client")
-	log.Println(CLIENT, string(res[:]))
 	//connBackUp.SetDeadline(time.Now().Add(-1 * time.Second))
 	log.Println(CLIENT, "before close in client")
 	//connBackUp.Close()
