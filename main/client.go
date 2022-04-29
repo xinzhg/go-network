@@ -37,7 +37,7 @@ func (c *Client) Do() {
 	//connBackUp.SetNoDelay(true)
 	//res, err := ioutil.ReadAll(connBackUp)
 	res := [512]byte{}
-	_, err = connBackUp.Read(res[:])
+	//_, err = connBackUp.Read(res[:])
 	if err != nil {
 		panic(err)
 		return
