@@ -95,6 +95,9 @@ func (s *Server) Do() {
 				panic("error in waiting" + err.Error())
 			}
 			log.Println(SERVER, "number of events from epoll", nevents)
+			if nevents == 0 {
+				continue
+			}
 			efd := 0
 			for i := 0; i < nevents; i++ {
 				event := events[i]
