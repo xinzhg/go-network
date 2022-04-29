@@ -47,6 +47,7 @@ func (s *Server) Do() {
 	go func() {
 		for {
 			conn, err := listener.AcceptTCP()
+			log.Println(SERVER, "received connection from client")
 			if err != nil {
 				//if errors.Is(err, u)
 				if strings.Contains(err.Error(), "use of closed network connection") {
