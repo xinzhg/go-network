@@ -20,7 +20,7 @@ func main() {
 	time.Sleep(10 * time.Second)
 	client := &Client{URL: ":1200"}
 	//wg := sync.WaitGroup{}
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 0; i++ {
 		//wg.Add(1)
 		func() {
 			defer func() {
@@ -49,6 +49,7 @@ func main() {
 	//	}()
 	//}
 	//wg.Wait()
+	time.Sleep(1 * time.Minute)
 	log.Println("before server Done")
 	server.Done <- struct{}{}
 	server.Shutdown()
