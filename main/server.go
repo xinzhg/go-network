@@ -39,7 +39,7 @@ func (s *Server) Do() {
 		panic(err)
 	}
 	s.listener = listener
-	epfd, err := u.EpollCreate1(u.EPOLL_CLOEXEC)
+	epfd, err := u.EpollCreate1(u.EPOLL_CLOEXEC | u.EPOLLET)
 	if err != nil {
 		panic("error in creating epoll instance" + err.Error())
 	}
