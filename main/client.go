@@ -58,6 +58,7 @@ func (c *Client) Do() {
 	}
 	if err != nil {
 		panic(err)
+	}
 
 	log.Println(CLIENT, "after readAll in client")
 	log.Println(CLIENT, string(res[:]))
