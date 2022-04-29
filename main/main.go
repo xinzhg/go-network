@@ -18,6 +18,7 @@ func main() {
 	go func() {
 		server.Do()
 	}()
+	time.Sleep(10 * time.Second)
 	client := &Client{URL: ":1200"}
 	wg := sync.WaitGroup{}
 	for i := 0; i < 10; i++ {
