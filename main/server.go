@@ -39,7 +39,7 @@ func (s *Server) Do() {
 		panic(err)
 	}
 	s.listener = listener
-	epfd, err := u.EpollCreate1(u.EPOLL_CLOEXEC | u.EPOLLET)
+	epfd, err := u.EpollCreate1(u.EPOLL_CLOEXEC)
 	if err != nil {
 		panic("error in creating epoll instance" + err.Error())
 	}
@@ -66,7 +66,7 @@ func (s *Server) Do() {
 			}
 			f, _ := conn.File()
 			var event u.EpollEvent
-			event.Events = syscall.EPOLLIN
+			event.Events = u.EPOLLIN | u.EPOLLET
 			event.Fd = int32(f.Fd())
 			err = u.EpollCtl(epfd, u.EPOLL_CTL_ADD, int(event.Fd), &event)
 			if err != nil {
