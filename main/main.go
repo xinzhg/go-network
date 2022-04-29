@@ -20,7 +20,7 @@ func main() {
 	time.Sleep(10 * time.Second)
 	client := &Client{URL: ":1200"}
 	//wg := sync.WaitGroup{}
-	for i := 0; i < 0; i++ {
+	for i := 0; i < 1; i++ {
 		//wg.Add(1)
 		func() {
 			defer func() {
