@@ -66,7 +66,7 @@ func (s *Server) Do() {
 			}
 			f, _ := conn.File()
 			var event u.EpollEvent
-			event.Events = u.EPOLLIN | u.EPOLLET
+			event.Events = u.EPOLLIN | u.EPOLLOUT | u.EPOLLMSG
 			event.Fd = int32(f.Fd())
 			err = u.EpollCtl(epfd, u.EPOLL_CTL_ADD, int(event.Fd), &event)
 			if err != nil {
