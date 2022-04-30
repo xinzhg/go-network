@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 	"strings"
+	"sync"
 	"time"
 
 	u "golang.org/x/sys/unix"
@@ -81,6 +82,9 @@ func (s *Server) Do() {
 		}
 	}()
 
+	cnt := 0
+	m := sync.Mutex{}
+
 	for {
 		log.Println(SERVER, "looping")
 		select {
@@ -107,7 +111,10 @@ func (s *Server) Do() {
 				if err != nil {
 					panic("error in epoll reading" + err.Error())
 				}
-				log.Println(SERVER, "details:", n, string(bs[:]), event.Events, event.Fd, event.Pad)
+				m.Lock()
+				cnt++
+				m.Unlock()
+				log.Println(SERVER, "details:", n, string(bs[:]), event.Events, event.Fd, event.Pad, cnt)
 			}
 			//go func() {
 			daytime := time.Now().String() + EOF
