@@ -89,7 +89,7 @@ func (s *Server) Do() {
 			return
 		default:
 			var events [512]u.EpollEvent
-			nevents, err := u.EpollWait(epfd, events[:], -1)
+			nevents, err := u.EpollWait(epfd, events[:], 100)
 			if err != nil {
 				panic("error in waiting" + err.Error())
 			}
