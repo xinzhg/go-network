@@ -5,7 +5,6 @@ import (
 	"log"
 	"net"
 	"strings"
-	"syscall"
 	"time"
 
 	u "golang.org/x/sys/unix"
@@ -68,7 +67,7 @@ func (s *Server) Do() {
 			var event u.EpollEvent
 			event.Events = u.EPOLLIN | u.EPOLLOUT | u.EPOLLMSG
 			event.Fd = int32(f.Fd())
-			err = u.EpollCtl(epfd, u.EPOLL_CTL_ADD, int(event.Fd), &event)
+			err = u.EpollCtl(epfd, u.EPOLL_CTL_ADD|u.EPOLL_CTL_MOD|u.EPOLL_CTL_DEL, int(event.Fd), &event)
 			if err != nil {
 				panic("error in epoll ctl" + err.Error())
 			}
@@ -122,11 +121,11 @@ func (s *Server) Do() {
 				//conn.Close()
 				return
 			}
-			var event u.EpollEvent
-			event.Events = syscall.EPOLLIN | syscall.EPOLLOUT
-			event.Fd = int32(efd)
-			u.EpollCtl(epfd, u.EPOLL_CTL_DEL, efd, &event)
-			u.Close(efd)
+			//var event u.EpollEvent
+			//event.Events = syscall.EPOLLIN | syscall.EPOLLOUT | syscall.EPOLL_CTL_ADD
+			//event.Fd = int32(efd)
+			//u.EpollCtl(epfd, u.EPOLL_CTL_DEL, efd, &event)
+			//u.Close(efd)
 			//conn.Close()
 			//}()
 		}
