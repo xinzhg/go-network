@@ -67,7 +67,7 @@ func (s *Server) Do() {
 			var event u.EpollEvent
 			event.Events = u.EPOLLIN | u.EPOLLOUT | u.EPOLLMSG
 			event.Fd = int32(f.Fd())
-			err = u.EpollCtl(epfd, u.EPOLL_CTL_ADD|u.EPOLL_CTL_MOD|u.EPOLL_CTL_DEL, int(event.Fd), &event)
+			err = u.EpollCtl(epfd, u.EPOLL_CTL_ADD, int(event.Fd), &event)
 			if err != nil {
 				panic("error in epoll ctl" + err.Error())
 			}
