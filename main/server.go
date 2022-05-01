@@ -114,7 +114,7 @@ func (s *Server) Do() {
 				m.Lock()
 				cnt++
 				m.Unlock()
-				log.Println(SERVER, "details:", "read size:", n, "type:", event.Events, "fd:", event.Fd, "pad", event.Pad, "cnt:", cnt)
+				log.Println(SERVER, "details:", string(bs[:]), "read size:", n, "type:", event.Events, "fd:", event.Fd, "pad", event.Pad, "cnt:", cnt)
 			}
 			//go func() {
 			daytime := time.Now().String() + EOF
