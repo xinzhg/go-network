@@ -116,18 +116,16 @@ func (s *Server) Do() {
 				m.Unlock()
 				log.Println(SERVER, "details:", string(bs[:]), "read size:", n, "type:", event.Events, "fd:", event.Fd, "pad", event.Pad, "cnt:", cnt)
 				daytime := time.Now().String() + EOF
-				go func() {
-					_, err = u.Write(int(efd), []byte(daytime))
-					if err != nil {
-						panic("error in epoll sending" + err.Error())
-					}
-					log.Println(SERVER, "sent", n)
-					if err != nil {
-						log.Println(SERVER, "error", err)
-						//conn.Close()
-						return
-					}
-				}()
+				_, err = u.Write(int(efd), []byte(daytime))
+				if err != nil {
+					panic("error in epoll sending" + err.Error())
+				}
+				log.Println(SERVER, "sent", n)
+				if err != nil {
+					log.Println(SERVER, "error", err)
+					//conn.Close()
+					return
+				}
 			}
 			//go func() {
 			//var event u.EpollEvent
