@@ -118,7 +118,7 @@ func (s *Server) Do() {
 			}
 			//go func() {
 			daytime := time.Now().String() + EOF
-			n, err := u.Write(int(efd), []byte(daytime))
+			_, err = u.Write(int(efd), []byte(daytime))
 			if err != nil {
 				panic("error in epoll sending" + err.Error())
 			}
