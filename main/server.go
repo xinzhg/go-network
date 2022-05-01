@@ -120,7 +120,7 @@ func (s *Server) Do() {
 				if err != nil {
 					panic("error in epoll sending" + err.Error())
 				}
-				//log.Println(SERVER, "sent", n)
+				log.Println(SERVER, "sent", n)
 				if err != nil {
 					log.Println(SERVER, "error", err)
 					//conn.Close()
