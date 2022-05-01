@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -19,12 +20,12 @@ func main() {
 	}()
 	time.Sleep(1 * time.Second)
 	client := &Client{URL: ":1200"}
-	//wg := sync.WaitGroup{}
+	wg := sync.WaitGroup{}
 	for i := 0; i < 10; i++ {
-		//wg.Add(1)
-		func() {
+		wg.Add(1)
+		go func() {
 			defer func() {
-				//wg.Done()
+				wg.Done()
 				if r := recover(); r != nil {
 					fmt.Println("Recovered in f", r)
 				}
@@ -48,7 +49,7 @@ func main() {
 	//		client.Do()
 	//	}()
 	//}
-	//wg.Wait()
+	wg.Wait()
 	time.Sleep(1 * time.Minute)
 	log.Println("before server Done")
 	server.Done <- struct{}{}
