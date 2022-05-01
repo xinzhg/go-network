@@ -115,19 +115,19 @@ func (s *Server) Do() {
 				cnt++
 				m.Unlock()
 				log.Println(SERVER, "details:", string(bs[:]), "read size:", n, "type:", event.Events, "fd:", event.Fd, "pad", event.Pad, "cnt:", cnt)
+				daytime := time.Now().String() + EOF
+				_, err = u.Write(int(efd), []byte(daytime))
+				if err != nil {
+					panic("error in epoll sending" + err.Error())
+				}
+				//log.Println(SERVER, "sent", n)
+				if err != nil {
+					log.Println(SERVER, "error", err)
+					//conn.Close()
+					return
+				}
 			}
 			//go func() {
-			daytime := time.Now().String() + EOF
-			_, err = u.Write(int(efd), []byte(daytime))
-			if err != nil {
-				panic("error in epoll sending" + err.Error())
-			}
-			//log.Println(SERVER, "sent", n)
-			if err != nil {
-				log.Println(SERVER, "error", err)
-				//conn.Close()
-				return
-			}
 			//var event u.EpollEvent
 			//event.Events = syscall.EPOLLIN | syscall.EPOLLOUT | syscall.EPOLL_CTL_ADD
 			//event.Fd = int32(efd)
