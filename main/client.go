@@ -34,12 +34,12 @@ func (c *Client) Do() {
 	}
 	m.Lock()
 	seq++
-	m.Unlock()
 	_, err = connBackUp.Write([]byte("info " + strconv.Itoa(seq)))
 	log.Println(CLIENT, "sent msg", seq)
 	if err != nil {
 		panic(err)
 	}
+	m.Unlock()
 	//log.Println(CLIENT, "cnt in client:", cnt)
 	//log.Println(CLIENT, "before readAll in client")
 	//connBackUp.SetNoDelay(true)
