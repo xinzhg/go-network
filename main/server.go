@@ -86,7 +86,7 @@ func (s *Server) Do() {
 	m := sync.Mutex{}
 
 	for {
-		log.Println(SERVER, "looping")
+		//log.Println(SERVER, "looping")
 		select {
 		case <-s.Done:
 			log.Println(SERVER, "terminating server")
@@ -105,7 +105,7 @@ func (s *Server) Do() {
 			for i := 0; i < nevents; i++ {
 				event := events[i]
 				bs := [512]byte{}
-				log.Println(SERVER, "reading", event.Fd)
+				//log.Println(SERVER, "reading", event.Fd)
 				n, err := u.Read(int(event.Fd), bs[:])
 				efd = int(event.Fd)
 				if err != nil {
@@ -122,7 +122,7 @@ func (s *Server) Do() {
 			if err != nil {
 				panic("error in epoll sending" + err.Error())
 			}
-			log.Println(SERVER, "sent", n)
+			//log.Println(SERVER, "sent", n)
 			if err != nil {
 				log.Println(SERVER, "error", err)
 				//conn.Close()

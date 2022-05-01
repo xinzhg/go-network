@@ -35,13 +35,13 @@ func (c *Client) Do() {
 	m.Lock()
 	seq++
 	m.Unlock()
-	cnt, err := connBackUp.Write([]byte("info " + strconv.Itoa(seq)))
+	_, err = connBackUp.Write([]byte("info " + strconv.Itoa(seq)))
 	log.Println(CLIENT, "sent msg")
 	if err != nil {
 		panic(err)
 	}
-	log.Println(CLIENT, "cnt in client:", cnt)
-	log.Println(CLIENT, "before readAll in client")
+	//log.Println(CLIENT, "cnt in client:", cnt)
+	//log.Println(CLIENT, "before readAll in client")
 	//connBackUp.SetNoDelay(true)
 	//res, err := ioutil.ReadAll(connBackUp)
 	res := [512]byte{}
@@ -55,9 +55,9 @@ func (c *Client) Do() {
 	}
 	log.Println(CLIENT, string(res[:]))
 
-	log.Println(CLIENT, "after readAll in client")
+	//log.Println(CLIENT, "after readAll in client")
 	//connBackUp.SetDeadline(time.Now().Add(-1 * time.Second))
-	log.Println(CLIENT, "before close in client")
+	//log.Println(CLIENT, "before close in client")
 	//connBackUp.Close()
-	log.Println(CLIENT, "after close in client")
+	//log.Println(CLIENT, "after close in client")
 }
