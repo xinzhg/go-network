@@ -51,7 +51,8 @@ func main() {
 	//}
 	log.Println("waiting")
 	wg.Wait()
-	//time.Sleep(1 * time.Minute)
+	log.Println("finished")
+	time.Sleep(1 * time.Minute)
 	log.Println("before server Done")
 	server.Done <- struct{}{}
 	server.Shutdown()
