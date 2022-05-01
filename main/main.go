@@ -49,6 +49,7 @@ func main() {
 	//		client.Do()
 	//	}()
 	//}
+	log.Println("waiting")
 	wg.Wait()
 	//time.Sleep(1 * time.Minute)
 	log.Println("before server Done")
