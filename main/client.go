@@ -26,9 +26,7 @@ func (c *Client) Do() {
 	if err != nil {
 		panic(err)
 	}
-	if connBackUp == nil {
-		connBackUp, err = net.DialTCP("tcp", nil, tcpAddr)
-	}
+	connBackUp, err = net.DialTCP("tcp", nil, tcpAddr)
 	if err != nil {
 		panic(err)
 	}
