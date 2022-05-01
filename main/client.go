@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"net"
+	"strconv"
+	"sync"
 )
 
 type Client struct {
@@ -12,6 +14,9 @@ type Client struct {
 const CLIENT = "client side: "
 
 var connBackUp *net.TCPConn
+
+var seq = 0
+var m = sync.Mutex{}
 
 func (c *Client) Do() {
 	if c.URL == "" {
@@ -27,7 +32,10 @@ func (c *Client) Do() {
 	if err != nil {
 		panic(err)
 	}
-	cnt, err := connBackUp.Write([]byte("HEAD / HTTP/1.0\r\n\r\n"))
+	m.Lock()
+	seq++
+	m.Unlock()
+	cnt, err := connBackUp.Write([]byte("HEAD / HTTP/1.0\r\n\r\n" + strconv.Itoa(seq)))
 	log.Println(CLIENT, "sent msg")
 	if err != nil {
 		panic(err)
