@@ -13,8 +13,6 @@ type Client struct {
 
 const CLIENT = "client side: "
 
-var connBackUp *net.TCPConn
-
 var seq = 0
 var m = sync.Mutex{}
 
@@ -22,6 +20,7 @@ func (c *Client) Do() {
 	if c.URL == "" {
 		panic("missing domain")
 	}
+	var connBackUp *net.TCPConn
 	tcpAddr, err := net.ResolveTCPAddr("tcp", c.URL)
 	if err != nil {
 		panic(err)

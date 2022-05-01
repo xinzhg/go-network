@@ -19,6 +19,7 @@ func main() {
 		server.Do()
 	}()
 	time.Sleep(1 * time.Second)
+	client := &Client{URL: ":1200"}
 	wg := sync.WaitGroup{}
 	for i := 0; i < 10; i++ {
 		wg.Add(1)
@@ -29,7 +30,6 @@ func main() {
 					fmt.Println("Recovered in f", r)
 				}
 			}()
-			client := &Client{URL: ":1200"}
 			time.Sleep(1 * time.Second)
 			client.Do()
 		}()
