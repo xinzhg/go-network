@@ -36,7 +36,7 @@ func (c *Client) Do() {
 	seq++
 	m.Unlock()
 	_, err = connBackUp.Write([]byte("info " + strconv.Itoa(seq)))
-	log.Println(CLIENT, "sent msg")
+	log.Println(CLIENT, "sent msg", seq)
 	if err != nil {
 		panic(err)
 	}
